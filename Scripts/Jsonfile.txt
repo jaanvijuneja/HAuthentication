@@ -1,0 +1,63 @@
+public class DataSubmitClass extends AsyncTask<String,Integer,Boolean>
+    {
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            list=new ArrayList<>();
+            list.add(new BasicNameValuePair("username",params[0]));
+			list.add(new BasicNameValuePair("password",params[1]));
+            HttpClient httpClient=new DefaultHttpClient();
+            HttpPost httpPost=new HttpPost("http://112.196.5.135:8081/AuthenticationScript.php");
+            try
+            {
+                httpPost.setEntity(new UrlEncodedFormEntity(list));
+                
+				HttpResponse httpResponse=httpClient.execute(httpPost);
+                HttpEntity httpEntity=httpResponse.getEntity();
+                InputStream responseget;
+                responseget=httpEntity.getContent();
+                InputStreamReader inputStreamReader=new InputStreamReader(responseget);
+                BufferedReader bufferedReader=new BufferedReader(inputStreamReader);
+                String getline;
+                StringBuilder sb=new StringBuilder();
+                while((getline=bufferedReader.readLine())!=null)
+                {
+                    sb.append(getline);
+                }
+                String data=sb.toString();
+                Log.d("log_response",data);
+                JSONObject json=new JSONObject(data);
+                String r = json.getString("response");
+                if(r.equalsIgnoreCase("insert")) {
+                    return true;
+                }
+
+            }
+            catch (Exception e)
+            {
+                Log.d("Log_Exception",e.toString());
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+            show();
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            progressDialog.dismiss();
+            if(aBoolean){
+                Toast.makeText(NotificationSubmitActivity.this,"Inserted",Toast.LENGTH_SHORT).show();
+              
+            }
+            else
+            {
+                Toast.makeText(NotificationSubmitActivity.this,"Not Inserted",Toast.LENGTH_SHORT).show();
+                
+            }
+            super.onPostExecute(aBoolean);
+        }
+    }
