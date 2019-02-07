@@ -20,8 +20,5 @@ public class ImageSliderActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         sliderAdapter = new SliderAdapter(this);
         viewPager.setAdapter(sliderAdapter);
-
-
-
     }
 }

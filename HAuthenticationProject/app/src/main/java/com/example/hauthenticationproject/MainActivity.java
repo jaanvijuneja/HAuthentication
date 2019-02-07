@@ -6,8 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
@@ -28,6 +30,7 @@ import java.io.InputStreamReader;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,7 +46,49 @@ public class MainActivity extends AppCompatActivity {
             edit_username = (EditText) findViewById(R.id.edit_username);
             edit_phoneno = (EditText) findViewById(R.id.edit_password);
             button_submit = (Button) findViewById(R.id.button_submit);
+        Spinner spinner = (Spinner) findViewById(R.id.statespinnerl);
 
+
+
+        // Spinner Drop down elements
+        List<String> categories = new ArrayList<String>();
+        categories.add("Choose State");
+        categories.add("Andra Pradesh");
+        categories.add("Arunachal Pradesh");
+        categories.add("Assam");
+        categories.add("Bihar");
+        categories.add("Chhattisgarh");
+        categories.add("Goa");
+        categories.add("Gujarat");
+        categories.add("Haryana");
+        categories.add("Himachal Pradesh");
+        categories.add("Jammu and Kashmir");
+        categories.add("Jharkhand");
+        categories.add("Karnataka");
+        categories.add("Kerala");
+        categories.add("Madya Pradesh");
+        categories.add("Maharashtra");
+        categories.add("Manipur");
+        categories.add("Meghalaya");
+        categories.add("Mizoram");
+        categories.add("Nagaland");
+        categories.add("Orissa");
+        categories.add("Punjab");
+        categories.add("Rajasthan");
+        categories.add("Sikkim");
+        categories.add("Tamil Nadu");
+        categories.add("Telagana");
+        categories.add("Tripura");
+        categories.add("Uttaranchal");
+        categories.add("Uttar Pradesh");
+        categories.add("West Bengal");
+
+
+        // Creating adapter for spinner
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.statespinner,categories);
+
+        // attaching data adapter to spinner
+        spinner.setAdapter(adapter);
             button_submit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

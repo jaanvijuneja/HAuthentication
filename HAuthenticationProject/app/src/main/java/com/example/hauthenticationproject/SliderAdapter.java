@@ -10,14 +10,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class SliderAdapter extends PagerAdapter {
     Context context;
     LayoutInflater inflater;
     Button button_signup;
     //list of images
-    public int[] lstimages = {R.drawable.map, R.drawable.map};
-
+    public int[] lstimages = {R.drawable.farmeri, R.drawable.helpi};
+    public String[] lsttitle = {"\t\t\t\t\t\t\t\tLogin As Farmer\n\nSwipe to Login As Professionals,\nResearcher or Students","Login As Professionals,\nResearcher or Students"};
     public SliderAdapter(Context context)
     {
         this.context = context;
@@ -31,6 +32,7 @@ public class SliderAdapter extends PagerAdapter {
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((LinearLayout)object);
+
     }
 
     @NonNull
@@ -41,16 +43,31 @@ public class SliderAdapter extends PagerAdapter {
         LinearLayout layoutSlide = (LinearLayout) view.findViewById(R.id.slidelayout);
         ImageView imageView = (ImageView) view.findViewById(R.id.image);
         button_signup = (Button) view.findViewById(R.id.slidesignupbutton);
+        TextView textView= (TextView) view.findViewById(R.id.slidetext);
         imageView.setImageResource(lstimages[position]);
+        textView.setText(lsttitle[position]);
 
-        button_signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(context,MainActivity.class);
-                v.getContext().startActivity(i);
-            }
-        });
+        if(position==0) {
+            button_signup.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(context, MainActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    v.getContext().startActivity(i);
 
+                }
+            });
+        }
+        else
+        {
+            button_signup.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(context, NavigationActivity.class);
+                    v.getContext().startActivity(i);
+                }
+            });
+        }
 
         container.addView(view);
         return view;
